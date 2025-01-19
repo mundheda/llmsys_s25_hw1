@@ -121,6 +121,8 @@ def backpropagate(variable: Variable, deriv: Any) -> None:
     # BEGIN ASSIGN1_1
     # TODO
    
+    # Some random comment to check git
+
     raise NotImplementedError("Task Autodiff Not Implemented Yet")
     # END ASSIGN1_1
 
