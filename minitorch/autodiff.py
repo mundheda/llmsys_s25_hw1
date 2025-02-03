@@ -103,6 +103,10 @@ def topological_sort(variable: Variable) -> Iterable[Variable]:
     # BEGIN ASSIGN1_1
     # TODO
     
+    visited = set()
+    result = []
+
+    
     raise NotImplementedError("Task Autodiff Not Implemented Yet")
     # END ASSIGN1_1
 
