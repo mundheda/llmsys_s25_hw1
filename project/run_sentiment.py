@@ -7,7 +7,7 @@ import sys
 sys.path.append('../')
 import minitorch
 
-from datasets import load_dataset
+# from datasets import load_dataset
 
 backend_name = "CudaKernelOps"
 
