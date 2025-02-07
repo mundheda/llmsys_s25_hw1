@@ -149,15 +149,16 @@ def backpropagate(variable: Variable, deriv: Any) -> None:
         grad = gradients[var.unique_id]
 
         # Propagate gradients to parents using chain rule
-        for parent, grad_contrib in var.chain_rule(grad):
-            if parent.unique_id not in gradients:
-                gradients[parent.unique_id] = grad_contrib
-            else:
-                gradients[parent.unique_id] += grad_contrib
-
-        # Accumulate gradient for leaf nodes
         if var.is_leaf():
             var.accumulate_derivative(grad)
+        
+        else:                
+            for parent, grad_contrib in var.chain_rule(grad):
+                if parent.unique_id not in gradients:
+                    gradients[parent.unique_id] = grad_contrib
+                else:
+                    gradients[parent.unique_id] += grad_contrib
+
     
     
     # END ASSIGN1_1
