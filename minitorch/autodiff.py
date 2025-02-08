@@ -156,9 +156,7 @@ def backpropagate(variable: Variable, deriv: Any) -> None:
                     gradients[parent.unique_id] = grad_contrib
                 else:
                     gradients[parent.unique_id] += grad_contrib
-
-    
-    
+                    
     # END ASSIGN1_1
 
 
