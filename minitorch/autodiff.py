@@ -138,8 +138,6 @@ def backpropagate(variable: Variable, deriv: Any) -> None:
 
     # Dictionary to store gradients for each variable
     gradients = {variable.unique_id: deriv}
-    print(gradients)
-    print("*" * 20)
 
     # Iterate through variables in reverse topological order
     for var in sorted_variables:
