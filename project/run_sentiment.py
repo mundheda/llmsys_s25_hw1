@@ -117,7 +117,7 @@ class Network(minitorch.Module):
         emb = emb.view(batch_size, self.embedding_dim)
         out = self.linear1(emb)
         out = out.relu()
-        out = minitorch.dropout(out, p=self.dropout_prob)   
+        out = minitorch.dropout(out, rate=self.dropout_prob)   
         out = self.linear2(out)
         out = out.sigmoid().view(out.shape[0])  
         
