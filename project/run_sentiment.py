@@ -215,7 +215,17 @@ class SentenceSentimentTrain:
                 # 5. Call backward function of the loss
                 # 6. Use Optimizer to take a gradient step
                 
-                raise NotImplementedError
+                def cross_entropy_loss(out, y):
+                    return -y * out.log() - (1 - y) * (1 - out).log()
+                
+                x = minitorch.tensor(X_train[example_num: example_num + batch_size], requires_grad=True, backend=BACKEND)
+                y = minitorch.tensor(y_train[example_num: example_num + batch_size], requires_grad=True, backend=BACKEND)
+                out = model(x)
+                
+                loss = cross_entropy_loss(out, y)
+                loss.backward()
+                optim.step()
+                
                 # END ASSIGN1_4
                 
                 
@@ -237,7 +247,13 @@ class SentenceSentimentTrain:
                 # 3. Obtain validation predictions using the get_predictions_array function, and add to the validation_predictions list
                 # 4. Obtain the validation accuracy using the get_accuracy function, and add to the validation_accuracy list
                 
-                raise NotImplementedError
+                x = minitorch.tensor(X_val, requires_grad=True, backend=BACKEND)
+                y = minitorch.tensor(y_val, requires_grad=True, backend=BACKEND)
+                
+                out = model(x)
+                validation_predictions += get_predictions_array(y, out)
+                validation_accuracy.append(get_accuracy(validation_predictions))
+                
                 
                 # END ASSIGN1_4
                 
