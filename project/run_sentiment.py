@@ -112,12 +112,14 @@ class Network(minitorch.Module):
         # 5. Apply sigmoid and reshape to (batch)
         # HINT: You can use minitorch.dropout for dropout, and minitorch.tensor.relu for ReLU
         
-        embeddings = embeddings.mean(axis=1)
-        out = self.linear1(embeddings)
-        out = minitorch.tensor.relu(out)
+        emb = embeddings.mean(dim=1)
+        batch_size = emb.shape[0]
+        emb = emb.view(batch_size, self.embedding_dim)
+        out = self.linear1(emb)
+        out = out.relu()
         out = minitorch.dropout(out, p=self.dropout_prob)   
         out = self.linear2(out)
-        out = minitorch.tensor.sigmoid(out).view(out.shape[0])  
+        out = out.sigmoid().view(out.shape[0])  
         
         return out
     
