@@ -238,9 +238,11 @@ __global__ void MatrixMultiplyKernel(
     int col = blockIdx.x * TILE + threadIdx.x;
 
     float sum = 0.0f;
-    // 2. Compute the position in the output array that this thread will write to
-    int out_pos = out_strides[0] * batch + out_strides[1] * row + out_strides[2] * col ;
-    // 3. Iterate over tiles of the two input matrices, read the data into shared memory
+
+    // Compute the position in the output array that this thread will write to
+    int out_pos = out_strides[0] * batch + out_strides[1] * row + out_strides[2] * col;
+
+    // Iterate over tiles of the two input matrices, read the data into shared memory
     for (int t = 0; t < (a_shape[2] + TILE - 1) / TILE; ++t) {
         // Load data into shared memory
         if (row < a_shape[1] && t * TILE + threadIdx.x < a_shape[2]) {
@@ -254,22 +256,23 @@ __global__ void MatrixMultiplyKernel(
         } else {
             b_shared[threadIdx.y][threadIdx.x] = 0.0f;
         }
-    // 4. Synchronize to make sure the data is available to all threads
-    __syncthreads();
-    // 5. Compute the output tile for this thread block
-    for (int k = 0; k < TILE; ++k) {
-          sum += a_shared[threadIdx.y][k] * b_shared[k][threadIdx.x];
-        }
-    // 6. Synchronize to make sure all threads are done computing the output tile for (row, col)
-    __syncthreads();
-    // 7. Write the output to global memory
-    if (row < out_shape[1] && col < out_shape[2]) {
-        out[out_pos] = sum;
-    /// END ASSIGN1_2
-      }
 
+        // Synchronize to make sure the data is available to all threads
+        __syncthreads();
+
+        // Compute the output tile for this thread block
+        for (int k = 0; k < TILE; ++k) {
+            sum += a_shared[threadIdx.y][k] * b_shared[k][threadIdx.x];
+        }
+
+        // Synchronize to make sure all threads are done computing the output tile for (row, col)
+        __syncthreads();
     }
 
+    // Write the output to global memory
+    if (row < out_shape[1] && col < out_shape[2]) {
+        out[out_pos] = sum;
+    }
 }
 
 
