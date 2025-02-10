@@ -125,22 +125,16 @@ class CudaKernelOps(TensorOps):
             # TODO
             
             # 1. Call the tensorZip function implemented in CUDA
-            lib.tensorZip(
+            lib.tensorMap(
                 out._tensor._storage,
                 out._tensor._shape.astype(np.int32),
                 out._tensor._strides.astype(np.int32),
                 out.size,
-                len(out.shape),
                 a._tensor._storage,
                 a._tensor._shape.astype(np.int32),
                 a._tensor._strides.astype(np.int32),
                 a.size,
                 len(a.shape),
-                b._tensor._storage,
-                b._tensor._shape.astype(np.int32),
-                b._tensor._strides.astype(np.int32),
-                b.size,
-                len(b.shape),
                 fn_id
             )
             
