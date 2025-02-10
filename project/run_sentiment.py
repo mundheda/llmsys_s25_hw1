@@ -216,7 +216,7 @@ class SentenceSentimentTrain:
                 # 6. Use Optimizer to take a gradient step
                 
                 def cross_entropy_loss(out, y):
-                    loss = y * out.log() + (1.0 - y) * (1.0 - out).log()
+                    loss = (y * out.log()) + (-y + 1.0) * (-out + 1.0).log()
                     return - loss.sum()
                 
                 x = minitorch.tensor(X_train[example_num: example_num + batch_size], requires_grad=True, backend=BACKEND)
