@@ -144,7 +144,7 @@ class CudaKernelOps(TensorOps):
                 fn_id
             )
             
-            raise NotImplementedError("Zip Function Not Implemented Yet")
+            # raise NotImplementedError("Zip Function Not Implemented Yet")
             # END ASSIGN1_2
             
             return out
