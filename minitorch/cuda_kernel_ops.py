@@ -123,8 +123,8 @@ class CudaKernelOps(TensorOps):
 
             # BEGIN ASSIGN1_2
             # TODO
-            
             # 1. Call the tensorZip function implemented in CUDA
+
             lib.tensorZip(
                 out._tensor._storage,
                 out._tensor._shape.astype(np.int32),
@@ -144,7 +144,6 @@ class CudaKernelOps(TensorOps):
                 fn_id
             )
             
-            # raise NotImplementedError("Zip Function Not Implemented Yet")
             # END ASSIGN1_2
             
             return out
@@ -183,6 +182,7 @@ class CudaKernelOps(TensorOps):
             # BEGIN ASSIGN1_2
             # TODO
             # 1. Call the tensorReduce function implemented in CUDA
+            
             lib.tensorReduce(
                 out._tensor._storage,
                 out._tensor._shape.astype(np.int32),
@@ -197,10 +197,11 @@ class CudaKernelOps(TensorOps):
                 fn_id
             )
             
+            # END ASSIGN1_2
+            
             return out
 
         return ret
-
 
     @staticmethod
     def matrix_multiply(a: Tensor, b: Tensor) -> Tensor:
@@ -262,6 +263,7 @@ class CudaKernelOps(TensorOps):
         # BEGIN ASSIGN1_2
         # TODO
         # 1. Call the Matmul function implemented in CUDA
+
         lib.MatrixMultiply(
             out._tensor._storage,
             out._tensor._shape.astype(np.int32),
@@ -276,6 +278,7 @@ class CudaKernelOps(TensorOps):
             a.shape[1],
             b.shape[2]
         )
+        
         # END ASSIGN1_2
         
         # Undo 3d if we added it.

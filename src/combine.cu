@@ -269,6 +269,8 @@ __global__ void MatrixMultiplyKernel(
       int out_idx = index_to_position(out_index, out_strides, 3);
       out[out_idx] = out_val;
     }
+
+    /// END ASSIGN1_2
 }
 
 
@@ -319,8 +321,7 @@ __global__ void mapKernel(
     // 4. Calculate the position of element in in_array according to in_index and in_strides
     // 5. Calculate the position of element in out_array according to out_index and out_strides
     // 6. Apply the unary function to the input element and write the output to the out memory
-    
-    
+
     int out_pos = blockIdx.x * blockDim.x + threadIdx.x;
     if (out_pos < out_size){
       to_index(out_pos, out_shape, out_index, shape_size);
@@ -384,7 +385,7 @@ __global__ void reduceKernel(
     // 3. Initialize the reduce_value to the output element
     // 4. Iterate over the reduce_dim dimension of the input array to compute the reduced value
     // 5. Write the reduced value to out memory
-
+    
     int out_pos = blockIdx.x * blockDim.x + threadIdx.x;
     if (out_pos < out_size){
       to_index(out_pos, out_shape, out_index, shape_size);
@@ -401,6 +402,8 @@ __global__ void reduceKernel(
         out[out_pos] = fn(fn_id, out[out_pos], a_storage[in_pos]);
       }
     }
+    
+    /// END ASSIGN1_2
 }
 
 __global__ void zipKernel(
@@ -464,7 +467,7 @@ __global__ void zipKernel(
     // 6. Broadcast the out_index to the b_index according to b_shape
     // 7.Calculate the position of element in b_array according to b_index and b_strides
     // 8. Apply the binary function to the input elements in a_array & b_array and write the output to the out memory
-    
+
     int out_pos = blockIdx.x * blockDim.x + threadIdx.x;
     if (out_pos < out_size) {
       to_index(out_pos, out_shape, out_index, out_shape_size);
@@ -474,6 +477,8 @@ __global__ void zipKernel(
       int b_pos = index_to_position(b_index, b_strides, b_shape_size);
       out[out_pos] = fn(fn_id, a_storage[a_pos], b_storage[b_pos]);
     } 
+
+    /// END ASSIGN1_2
 }
 
 
